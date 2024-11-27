@@ -15,14 +15,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class PkmAdaptador extends RecyclerView.Adapter<PkmAdaptador.PkmViewHolder> {
+    // Variables
     ArrayList<Pokemon> lista;
     private boolean coloresActivados = false;
     private boolean mostrarTipo = false;
     private boolean mostrarImagen = false;
 
+    // Constructor que recibe la lista de Pokémon
     public PkmAdaptador(ArrayList<Pokemon> lista) {
         this.lista = lista;
     }
+
     @NonNull
     @Override
     public PkmAdaptador.PkmViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -33,26 +36,30 @@ public class PkmAdaptador extends RecyclerView.Adapter<PkmAdaptador.PkmViewHolde
         return pkmViewHolder;
     }
 
+    // Asocia los datos de un Pokémon con las vistas del ViewHolder
     @Override
     public void onBindViewHolder(@NonNull PkmAdaptador.PkmViewHolder holder, int position) {
+        // Obtiene el pokemon segun su posicion
         Pokemon pkm = lista.get(position);
         holder.tv_nombre.setText(pkm.getName());
         holder.tv_type.setText(pkm.getType());
         holder.imagen.setImageResource(pkm.getImage());
 
-
+        // color del nombre segun su tipo
         if(coloresActivados){
             holder.tv_nombre.setTextColor(getColor(pkm.getType()));
         }else{
             holder.tv_nombre.setTextColor(Color.BLACK);
         }
 
+        // mostrar u ocultar el tipo
         if(mostrarTipo){
             holder.tv_type.setTextColor(Color.BLACK);
         }else{
             holder.tv_type.setTextColor(Color.WHITE);
         }
 
+        // mostrar u ocultar el pokemon segun el switch
         if (pkm.isShowImage()) {
             holder.imagen.setVisibility(View.VISIBLE);
             holder.show_image.setChecked(true);
@@ -60,6 +67,8 @@ public class PkmAdaptador extends RecyclerView.Adapter<PkmAdaptador.PkmViewHolde
             holder.imagen.setVisibility(View.GONE);
             holder.show_image.setChecked(false);
         }
+
+        // configurar el switch
         holder.show_image.setOnCheckedChangeListener((buttonView, isChecked) -> {
             pkm.setShowImage(isChecked); // Actualizar el estado en el modelo
             holder.imagen.setVisibility(isChecked ? View.VISIBLE : View.GONE);
@@ -78,6 +87,7 @@ public class PkmAdaptador extends RecyclerView.Adapter<PkmAdaptador.PkmViewHolde
 
     }
 
+    // devuelve un color segun el tipo
     private int getColor(String type){
         switch (type.toLowerCase()){
             case "planta":
@@ -105,9 +115,10 @@ public class PkmAdaptador extends RecyclerView.Adapter<PkmAdaptador.PkmViewHolde
         }
 
     }
+
     public void activarColores(boolean activar){
         coloresActivados = activar;
-        notifyDataSetChanged();
+        notifyDataSetChanged(); // Notifica cambios
     }
     public void mostrarTipo(boolean mostrar) {
         mostrarTipo = mostrar;
@@ -119,18 +130,20 @@ public class PkmAdaptador extends RecyclerView.Adapter<PkmAdaptador.PkmViewHolde
     }
 
 
-
+    // Devuelve la cantidad de elementos de la lista
     @Override
     public int getItemCount() {
         return lista.size();
     }
 
+    // Clase interna para definir el ViewHolder de cada elemento
     public class PkmViewHolder extends RecyclerView.ViewHolder{
         TextView tv_nombre;
         TextView tv_type;
         ImageView imagen;
         Switch show_image;
 
+        // Constructor que enlaza las vistas de la ficha
         public PkmViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_nombre = itemView.findViewById(R.id.tv_nombre);

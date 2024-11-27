@@ -1,17 +1,20 @@
 package com.example.trabajo_final_unidad_3;
 
 public class Pokemon {
+    // Atributos del objetos
     private String name;
     private String type;
     private int image;
     private boolean showImage;
 
+    // constructor
     public Pokemon(String name, String type, int image) {
         this.name = name;
         this.type = type;
         this.image = image;
     }
 
+    // getters/setters y toString
     public String getName() {
         return name;
     }
