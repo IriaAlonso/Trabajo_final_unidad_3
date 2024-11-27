@@ -1,6 +1,7 @@
 package com.example.trabajo_final_unidad_3;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,9 @@ public class PkmAdaptador extends RecyclerView.Adapter<PkmAdaptador.PkmViewHolde
 
     // Constructor que recibe la lista de Pokémon
     public PkmAdaptador(ArrayList<Pokemon> lista) {
+        if (lista == null || lista.isEmpty()) {
+            Log.w("Warning", "La lista de Pokémon está vacía o es null.");
+        }
         this.lista = lista;
     }
 
@@ -41,6 +45,10 @@ public class PkmAdaptador extends RecyclerView.Adapter<PkmAdaptador.PkmViewHolde
     public void onBindViewHolder(@NonNull PkmAdaptador.PkmViewHolder holder, int position) {
         // Obtiene el pokemon segun su posicion
         Pokemon pkm = lista.get(position);
+        if (pkm == null) {
+            Log.w("Warning", "El Pokémon en la posición " + position + " es null.");
+            return;
+        }
         holder.tv_nombre.setText(pkm.getName());
         holder.tv_type.setText(pkm.getType());
         holder.imagen.setImageResource(pkm.getImage());
