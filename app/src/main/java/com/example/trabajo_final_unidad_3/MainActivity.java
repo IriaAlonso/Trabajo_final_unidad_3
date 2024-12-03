@@ -1,9 +1,14 @@
 package com.example.trabajo_final_unidad_3;
 
-import android.annotation.SuppressLint;
+
 import android.os.Bundle;
-import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -54,11 +59,39 @@ public class MainActivity extends AppCompatActivity {
         rv_pkm.setLayoutManager(new LinearLayoutManager(this));
         rv_pkm.setAdapter(pkmadaptador);
 
+      TextView textView = findViewById(R.id.textView2);
+        registerForContextMenu(textView);
+        Button button = findViewById(R.id.button3);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Crear un PopupMenu
+                PopupMenu popupMenu = new PopupMenu(MainActivity.this, v);
+                popupMenu.getMenuInflater().inflate(R.menu.menu, popupMenu.getMenu());
+
+
+                // Manejar las selecciones de las opciones del menú
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        // Mostrar un mensaje dependiendo de la opción seleccionada
+                        Toast.makeText(MainActivity.this, "Seleccionaste: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
+
+                // Mostrar el PopupMenu
+                popupMenu.show();
+            }
+        });
+
         TabLayout tl = findViewById(R.id.tab);
         tl.addTab(tl.newTab().setText("Pokemon"));
         tl.addTab(tl.newTab().setText("Regiones"));
         tl.addTab(tl.newTab().setText("Medallas"));
-        final int[] previousTabPosition = {-1};
+
+
         tl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -84,6 +117,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        // Inflar el menú contextual desde el archivo XML
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
     }
     // Metodo llamado cuando se presiona el boton que muestra los colores
     public void onClick(View view) {

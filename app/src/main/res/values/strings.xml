@@ -2,4 +2,14 @@
     <string name="app_name">Trabajo_final_unidad_3</string>
     <string name="mostrar_tipo">MOSTRAR TIPO</string>
     <string name="cambiar_color_nombre">CAMBIAR COLOR NOMBRE</string>
+    <string name="item">Item</string>
+    <string name="item2">Item</string>
+    <string name="item3">Item</string>
+    <string name="azul">Azul</string>
+    <string name="rojo">Rojo</string>
+    <string name="verde">Verde</string>
+    <string name="textview">TextView</string>
+    <string name="button">Button</string>
+    <string name="boton_popup">Boton Popup</string>
+    <string name="menu_contextual">Menu contextual</string>
 </resources>
