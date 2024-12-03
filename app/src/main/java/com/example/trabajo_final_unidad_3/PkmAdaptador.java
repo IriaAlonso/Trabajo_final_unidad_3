@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 
 public class PkmAdaptador extends RecyclerView.Adapter<PkmAdaptador.PkmViewHolder> {
@@ -84,8 +86,8 @@ public class PkmAdaptador extends RecyclerView.Adapter<PkmAdaptador.PkmViewHolde
 
         // evento al clickar un objeto de la lista
         holder.itemView.setOnClickListener(v -> {
-            Toast.makeText(
-                    v.getContext(),
+            Snackbar.make(
+                    v,
                     pkm.getName() + " de tipo " + pkm.getType(),
                     Toast.LENGTH_SHORT
             ).show();

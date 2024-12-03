@@ -1,8 +1,10 @@
 package com.example.trabajo_final_unidad_3;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +13,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +54,36 @@ public class MainActivity extends AppCompatActivity {
         rv_pkm.setLayoutManager(new LinearLayoutManager(this));
         rv_pkm.setAdapter(pkmadaptador);
 
+        TabLayout tl = findViewById(R.id.tab);
+        tl.addTab(tl.newTab().setText("Pokemon"));
+        tl.addTab(tl.newTab().setText("Regiones"));
+        tl.addTab(tl.newTab().setText("Medallas"));
+        final int[] previousTabPosition = {-1};
+        tl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Snackbar snackbar = Snackbar.make(findViewById(R.id.main), "Proximamente...", Snackbar.LENGTH_LONG);
+                snackbar.setAction("Deshacer", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Acción al hacer clic en "Deshacer"
+                    }
+                });
+                snackbar.show();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
     }
     // Metodo llamado cuando se presiona el boton que muestra los colores
     public void onClick(View view) {
@@ -59,4 +94,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClick2(View view) {
         pkmadaptador.mostrarTipo(true);
     }
+
+
+
 }
