@@ -1,5 +1,6 @@
 package com.example.trabajo_final_unidad_3;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -48,6 +49,14 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView rv_pkm = findViewById(R.id.rv_pkm);
         rv_pkm.setLayoutManager(new LinearLayoutManager(this));
         rv_pkm.setAdapter(pkmadaptador);
+
+        // Establecer orientación según el sensor del dispositivo
+        // Establecer orientación según el sensor del dispositivo
+        this.setRequestedOrientation(
+                ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+
+// Establecer la orientación en horizontal
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
     }
     // Metodo llamado cuando se presiona el boton que muestra los colores
