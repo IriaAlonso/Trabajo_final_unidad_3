@@ -51,12 +51,9 @@ public class MainActivity extends AppCompatActivity {
         rv_pkm.setAdapter(pkmadaptador);
 
         // Establecer orientación según el sensor del dispositivo
-        // Establecer orientación según el sensor del dispositivo
         this.setRequestedOrientation(
                 ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
 
-// Establecer la orientación en horizontal
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
     }
     // Metodo llamado cuando se presiona el boton que muestra los colores
