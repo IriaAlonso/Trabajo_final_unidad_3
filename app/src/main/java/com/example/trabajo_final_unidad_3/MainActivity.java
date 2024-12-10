@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         addFragmentButton.setOnClickListener(v -> {
             String inputText = editText.getText().toString();
             Bundle bundle = new Bundle();
-            bundle.putString("", inputText);
+            bundle.putString("input_text", inputText);
             MyFragment myFragment = new MyFragment();
             myFragment.setArguments(bundle);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
