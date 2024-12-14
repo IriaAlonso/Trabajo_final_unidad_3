@@ -2,4 +2,6 @@
     <string name="app_name">Trabajo_final_unidad_3</string>
     <string name="mostrar_tipo">MOSTRAR TIPO</string>
     <string name="cambiar_color_nombre">CAMBIAR COLOR NOMBRE</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
