@@ -9,6 +9,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity {
     private PokemonListFragment pokemonListFragment;
 
@@ -24,14 +27,34 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Cargar el fragmento de la lista de Pokémon
-        pokemonListFragment = new PokemonListFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, pokemonListFragment)
-                .commit();
+        // Crear la lista de Pokémon
+        ArrayList<Pokemon> pokemonList = new ArrayList<>(Arrays.asList(
+                new Pokemon("Bulbasaur", "Planta", R.drawable.bulbasaur),
+                new Pokemon("Charmander", "Fuego", R.drawable.charmander),
+                new Pokemon("Squirtle", "Agua", R.drawable.squirtle),
+                new Pokemon("Pidgey", "Normal", R.drawable.pidgey),
+                new Pokemon("Zubat", "Veneno", R.drawable.zubat),
+                new Pokemon("Geodude", "Roca", R.drawable.geodude),
+                new Pokemon("Pikachu", "Electrico", R.drawable.pikachu),
+                new Pokemon("Jigglypuff", "Hada", R.drawable.jigglipuf),
+                new Pokemon("Machop", "Lucha", R.drawable.machop),
+                new Pokemon("Abra", "Psiquico", R.drawable.abra)
+        ));
+
+        // Cargar el fragmento con los datos
+        if (savedInstanceState == null) {
+            pokemonListFragment = new PokemonListFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("pokemon_list", pokemonList);
+            pokemonListFragment.setArguments(bundle);
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, pokemonListFragment)
+                    .commit();
+        }
     }
 
-    // Métodos llamados por los botones
     public void onClick(View view) {
         if (pokemonListFragment != null) {
             pokemonListFragment.activarColores(true);

@@ -1,6 +1,11 @@
 package com.example.trabajo_final_unidad_3;
 
-public class Pokemon {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Pokemon implements Parcelable {
     // Atributos del objetos
     private String name;
     private String type;
@@ -13,6 +18,25 @@ public class Pokemon {
         this.type = type;
         this.image = image;
     }
+
+    protected Pokemon(Parcel in) {
+        name = in.readString();
+        type = in.readString();
+        image = in.readInt();
+        showImage = in.readByte() != 0;
+    }
+
+    public static final Creator<Pokemon> CREATOR = new Creator<Pokemon>() {
+        @Override
+        public Pokemon createFromParcel(Parcel in) {
+            return new Pokemon(in);
+        }
+
+        @Override
+        public Pokemon[] newArray(int size) {
+            return new Pokemon[size];
+        }
+    };
 
     // getters/setters y toString
     public String getName() {
@@ -54,5 +78,18 @@ public class Pokemon {
                 ", type='" + type + '\'' +
                 ", image=" + image +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(type);
+        parcel.writeInt(image);
+        parcel.writeByte((byte) (showImage ? 1 : 0));
     }
 }
