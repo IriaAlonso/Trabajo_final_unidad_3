@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PokemonListFragment extends Fragment {
     private ArrayList<Pokemon> arrayPkm;
@@ -21,23 +20,17 @@ public class PokemonListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflar el diseño del fragmento
         View view = inflater.inflate(R.layout.fragment_blank, container, false);
 
-        // Inicializar lista de Pokémon
-        arrayPkm = new ArrayList<>(Arrays.asList(new Pokemon[]{
-                new Pokemon("Bulbasaur", "Planta", R.drawable.bulbasaur),
-                new Pokemon("Charmander", "Fuego", R.drawable.charmander),
-                new Pokemon("Squirtle", "Agua", R.drawable.squirtle),
-                new Pokemon("Pidgey", "Normal", R.drawable.pidgey),
-                new Pokemon("Zubat", "Veneno", R.drawable.zubat),
-                new Pokemon("Geodude", "Roca", R.drawable.geodude),
-                new Pokemon("Pikachu", "Electrico", R.drawable.pikachu),
-                new Pokemon("Jigglypuff", "Hada", R.drawable.jigglipuf),
-                new Pokemon("Machop", "Lucha", R.drawable.machop),
-                new Pokemon("Abra", "Psiquico", R.drawable.abra),
-        }));
+        // Obtener la lista de Pokémon del Bundle
+        if (getArguments() != null) {
+            arrayPkm = getArguments().getParcelableArrayList("pokemon_list");
+        } else {
+            arrayPkm = new ArrayList<>();
+        }
 
-        // Configurar adaptador y RecyclerView
+        // Configurar el RecyclerView
         pkmadaptador = new PkmAdaptador(arrayPkm);
         RecyclerView rv_pkm = view.findViewById(R.id.rv_pkm);
         rv_pkm.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -47,10 +40,14 @@ public class PokemonListFragment extends Fragment {
     }
 
     public void activarColores(boolean activar) {
-        pkmadaptador.activarColores(activar);
+        if (pkmadaptador != null) {
+            pkmadaptador.activarColores(activar);
+        }
     }
 
     public void mostrarTipo(boolean mostrar) {
-        pkmadaptador.mostrarTipo(mostrar);
+        if (pkmadaptador != null) {
+            pkmadaptador.mostrarTipo(mostrar);
+        }
     }
 }

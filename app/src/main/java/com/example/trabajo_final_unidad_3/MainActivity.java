@@ -14,8 +14,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity {
     private PokemonListFragment pokemonListFragment;
+    private MedallasFragment medallasFragment;
+    private RegionesFragment regionesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,44 +28,68 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-
-        });
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, new com.example.trabajo_final_unidad_3.PokemonListFragment()) // Colocamos el fragmento inicial (Rojo)
-                .commit();
+
+        if (savedInstanceState == null) {
+            pokemonListFragment = new PokemonListFragment();
+            medallasFragment = new MedallasFragment();
+            regionesFragment = new RegionesFragment();
+
+            ArrayList<Pokemon> pokemonList = new ArrayList<>(Arrays.asList(
+                    new Pokemon("Bulbasaur", "Planta", R.drawable.bulbasaur),
+                    new Pokemon("Charmander", "Fuego", R.drawable.charmander),
+                    new Pokemon("Squirtle", "Agua", R.drawable.squirtle),
+                    new Pokemon("Pidgey", "Normal", R.drawable.pidgey),
+                    new Pokemon("Zubat", "Veneno", R.drawable.zubat),
+                    new Pokemon("Geodude", "Roca", R.drawable.geodude),
+                    new Pokemon("Pikachu", "Electrico", R.drawable.pikachu),
+                    new Pokemon("Jigglypuff", "Hada", R.drawable.jigglipuf),
+                    new Pokemon("Machop", "Lucha", R.drawable.machop),
+                    new Pokemon("Abra", "Psiquico", R.drawable.abra)
+            ));
+
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("pokemon_list", pokemonList);
+            pokemonListFragment.setArguments(bundle);
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, pokemonListFragment)
+                    .commit();
+        } else {
+            // Recupera los fragmentos existentes
+            pokemonListFragment = (PokemonListFragment) fragmentManager.findFragmentByTag("PokemonListFragment");
+            medallasFragment = (MedallasFragment) fragmentManager.findFragmentByTag("MedallasFragment");
+            regionesFragment = (RegionesFragment) fragmentManager.findFragmentByTag("RegionesFragment");
+        }
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
 
-            // Lógica de navegación entre los fragmentos
             if (item.getItemId() == R.id.nav_pokemon_list) {
-                selectedFragment = new com.example.trabajo_final_unidad_3.PokemonListFragment();
+                selectedFragment = pokemonListFragment;
             } else if (item.getItemId() == R.id.nav_medallas) {
-                selectedFragment = new com.example.trabajo_final_unidad_3.MedallasFragment();
+                if (medallasFragment == null) {
+                    medallasFragment = new MedallasFragment();
+                }
+                selectedFragment = medallasFragment;
             } else if (item.getItemId() == R.id.nav_regiones) {
-                selectedFragment = new com.example.trabajo_final_unidad_3.RegionesFragment();
+                if (regionesFragment == null) {
+                    regionesFragment = new RegionesFragment();
+                }
+                selectedFragment = regionesFragment;
             }
 
-            // Reemplazar el fragmento
             if (selectedFragment != null) {
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.fragment_container, selectedFragment); // Reemplaza el fragmento actual
-                transaction.addToBackStack(null); // Añadir a la pila de retroceso para permitir la navegación hacia atrás
-                transaction.commit();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, selectedFragment)
+                        .commit();
             }
 
-            return true; // Indicar que el ítem fue seleccionado correctamente
+            return true;
         });
-
     }
 
-    // Métodos llamados por los botones
     public void onClick(View view) {
         if (pokemonListFragment != null) {
             pokemonListFragment.activarColores(true);
